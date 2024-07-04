@@ -3,6 +3,7 @@ package cmd
 import (
 	"flag"
 	"gohangyourself/cmd/sub/platform"
+	"gohangyourself/cmd/sub/script"
 	"log/slog"
 	"os"
 	"strings"
@@ -23,6 +24,15 @@ var (
 	TestFlag bool
 )
 
+type SubCommand interface {
+	Handle(args []string)
+}
+
+var subCommands = map[string]SubCommand{
+	"platform": platform.SubCommand{},
+	"script":   script.SubCommand{},
+}
+
 func Execute() {
 	flag.Usage = func() {
 		slog.Info(usage)
@@ -37,18 +47,12 @@ func Execute() {
 	flag.BoolVar(&TestFlag, "t", false, "test flag")
 
 	subCmd := strings.ToLower(os.Args[1])
-	switch subCmd {
-	case "version":
-		slog.Info("version")
-	case "plugin":
-		slog.Info("plugin")
-	case "script":
-		slog.Info("script")
-	case "help":
-		slog.Info("help")
-	case "platform":
-		platform.Handle(os.Args[2:])
-	default:
+	handler, exists := subCommands[subCmd]
+	if !exists {
+		slog.Error("sub command not found", "subCmd", subCmd)
 		flag.Usage()
+		os.Exit(1)
 	}
+
+	handler.Handle(os.Args[2:])
 }

@@ -10,7 +10,9 @@ import (
 	"strings"
 )
 
-func Handle(args []string) {
+type SubCommand struct{}
+
+func (p SubCommand) Handle(args []string) {
 	platform, err := getPlatform(args)
 	if err != nil {
 		slog.Error("Couldn't get platform",

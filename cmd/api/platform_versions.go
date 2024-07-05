@@ -1,8 +1,8 @@
 package api
 
 import (
+	"github.com/imMohika/gohangyourself/api/hangar"
 	"github.com/pterm/pterm"
-	"gohangyourself/api/hangar"
 )
 
 func GetPlatformVersions(platform string) ([]string, error) {

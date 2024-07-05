@@ -2,8 +2,8 @@ package platform
 
 import (
 	"errors"
+	"github.com/imMohika/gohangyourself/cmd/api"
 	"github.com/pterm/pterm"
-	"gohangyourself/cmd/api"
 	"log/slog"
 	"os"
 	"slices"

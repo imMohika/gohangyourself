@@ -1,6 +1,6 @@
 package main
 
-import "gohangyourself/cmd"
+import "github.com/imMohika/gohangyourself/cmd"
 
 func main() {
 	cmd.Execute()

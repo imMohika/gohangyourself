@@ -1,4 +1,4 @@
-module gohangyourself
+module github.com/imMohika/gohangyourself
 
 go 1.22
 

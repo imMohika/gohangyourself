@@ -1,0 +1,55 @@
+# The lines below are called `modelines`. See `:help modeline`
+# Feel free to remove those if you don't want/need to use them.
+# yaml-language-server: $schema=https://goreleaser.com/static/schema.json
+# vim: set ts=2 sw=2 tw=0 fo=cnqoj
+
+version: 1
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+      - arm
+      - "386"
+    goarm:
+      - "6"
+      - "7"
+
+nfpms:
+  - package_name: gohangyourself
+    homepage: https://github.com/imMohika/gohangyourself
+    maintainer: imMohika <mohi222@protonmail.com>
+    description: |-
+      Gohangyourself installer package. CLI tool for minecraft servers.
+    formats:
+      - rpm
+      - deb
+
+sboms:
+  - artifacts: archive
+
+archives:
+  - format: binary
+
+checksum:
+  name_template: "checksums.txt"
+
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"

@@ -22,3 +22,7 @@
 go.work
 
 .idea
+
+dist/
+
+.env

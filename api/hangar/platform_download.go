@@ -2,7 +2,7 @@ package hangar
 
 import (
 	"fmt"
-	"gohangyourself/cmd/download"
+	"github.com/imMohika/gohangyourself/cmd/download"
 )
 
 func DownloadPlatform(platform, version string, build int) error {

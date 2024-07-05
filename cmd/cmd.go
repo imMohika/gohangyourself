@@ -2,8 +2,8 @@ package cmd
 
 import (
 	"flag"
-	"gohangyourself/cmd/sub/platform"
-	"gohangyourself/cmd/sub/script"
+	"github.com/imMohika/gohangyourself/cmd/sub/platform"
+	"github.com/imMohika/gohangyourself/cmd/sub/script"
 	"log/slog"
 	"os"
 	"strings"

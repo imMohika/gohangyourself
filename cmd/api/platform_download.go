@@ -1,7 +1,7 @@
 package api
 
 import (
-	"gohangyourself/api/hangar"
+	"github.com/imMohika/gohangyourself/api/hangar"
 )
 
 func DownloadPlatform(platform, version string, build int) error {

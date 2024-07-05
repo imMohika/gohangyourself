@@ -2,8 +2,8 @@ package api
 
 import (
 	"fmt"
+	"github.com/imMohika/gohangyourself/api/hangar"
 	"github.com/pterm/pterm"
-	"gohangyourself/api/hangar"
 )
 
 func GetPlatformLatestBuild(platform, version string) (int, error) {

@@ -2,12 +2,10 @@ package download
 
 import (
 	"fmt"
+	"github.com/imMohika/gohangyourself/net"
 	"github.com/pterm/pterm"
 	"io"
-	"log/slog"
-	"net/http"
 	"os"
-	"strings"
 )
 
 type WriteCounter struct {
@@ -22,25 +20,9 @@ func (wc *WriteCounter) Write(p []byte) (int, error) {
 	return n, nil
 }
 
-func FromURL(url string) error {
-	resp, err := http.Get(url)
-	if err != nil {
-		return fmt.Errorf("failed to get URL %s: %w", url, err)
-	}
-	defer func(Body io.ReadCloser) {
-		err := Body.Close()
-		if err != nil {
-			slog.Error("failed to close response body",
-				"error", err)
-		}
-	}(resp.Body)
+func FromURL(url string, fileName string) error {
+	resp := net.Request(url, "failed to download "+fileName)
 
-	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("unexpected status code: %d, url %s", resp.StatusCode, url)
-	}
-
-	segments := strings.Split(url, "/")
-	fileName := segments[len(segments)-1]
 	out, err := os.Create(fileName + ".tmp")
 	if err != nil {
 		return err

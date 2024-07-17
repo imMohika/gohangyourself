@@ -28,7 +28,7 @@ type BuildsList struct {
 	}
 }
 
-func LatestBuild(version string) (int, error) {
+func GetLatestBuild(version string) (int, error) {
 	url := fmt.Sprintf("https://api.purpurmc.org/v2/purpur/%s", version)
 	var buildsList BuildsList
 	net.Get(url, "failed to get build list", &buildsList)

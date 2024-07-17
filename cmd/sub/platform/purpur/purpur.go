@@ -17,7 +17,7 @@ func (p PlatformPurpur) Versions() ([]string, error) {
 }
 
 func (p PlatformPurpur) LatestBuild(version string) (int, error) {
-	latest, err := purpur.LatestBuild(version)
+	latest, err := purpur.GetLatestBuild(version)
 	return latest, err
 }
 

@@ -16,24 +16,16 @@ func (p PlatformPaper) Versions() ([]string, error) {
 	return versions, nil
 }
 func (p PlatformPaper) LatestBuild(version string) (int, error) {
-	builds, err := hangar.GetBuildList("paper", version)
+	build, err := hangar.GetLatestBuild("paper", version)
 	if err != nil {
 		return 0, err
 	}
 
-	var latestBuild hangar.Builds
-	for _, build := range builds {
-		if build.Channel == "default" {
-			latestBuild = build
-			break
-		}
-	}
-
-	if latestBuild.Build == 0 {
+	if build == 0 {
 		return 0, fmt.Errorf("no stable build for version %s found :(", version)
 	}
 
-	return latestBuild.Build, nil
+	return build, nil
 }
 
 func (p PlatformPaper) FileName(version string, build int) string {

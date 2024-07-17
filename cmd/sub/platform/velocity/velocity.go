@@ -16,24 +16,16 @@ func (p PlatformVelocity) Versions() ([]string, error) {
 }
 
 func (p PlatformVelocity) LatestBuild(version string) (int, error) {
-	builds, err := hangar.GetBuildList("velocity", version)
+	build, err := hangar.GetLatestBuild("velocity", version)
 	if err != nil {
 		return 0, err
 	}
 
-	var latestBuild hangar.Builds
-	for _, build := range builds {
-		if build.Channel == "default" {
-			latestBuild = build
-			break
-		}
-	}
-
-	if latestBuild.Build == 0 {
+	if build == 0 {
 		return 0, fmt.Errorf("no stable build for version %s found :(", version)
 	}
 
-	return latestBuild.Build, nil
+	return build, nil
 }
 
 func (p PlatformVelocity) DownloadURL(version string, build int) string {

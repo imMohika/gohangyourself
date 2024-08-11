@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/imMohika/gohangyourself/log"
+	"github.com/tidwall/gjson"
+	"io"
 	"net/http"
 )
 
@@ -35,4 +37,16 @@ func Get(url string, notOkErr string, content interface{}) int {
 	err = resp.Body.Close()
 	log.Error(err, "failed to close response body")
 	return resp.StatusCode
+}
+func GetGJSON(url string, notOkErr string) gjson.Result {
+	resp := Request(url, notOkErr)
+
+	log.Debug("decoding json")
+	content, err := io.ReadAll(resp.Body)
+	log.Error(err, "an error occurred while reading body")
+
+	err = resp.Body.Close()
+	log.Error(err, "failed to close response body")
+
+	return gjson.ParseBytes(content)
 }

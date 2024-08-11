@@ -2,7 +2,9 @@ package cmd
 
 import (
 	"flag"
+	"github.com/imMohika/gohangyourself/cmd/sub"
 	"github.com/imMohika/gohangyourself/cmd/sub/platform"
+	"github.com/imMohika/gohangyourself/cmd/sub/plugin"
 	"github.com/imMohika/gohangyourself/cmd/sub/script"
 	"log/slog"
 	"os"
@@ -24,13 +26,10 @@ var (
 	TestFlag bool
 )
 
-type SubCommand interface {
-	Handle(args []string)
-}
-
-var subCommands = map[string]SubCommand{
+var subCommands = map[string]sub.Command{
 	"platform": platform.SubCommand{},
 	"script":   script.SubCommand{},
+	"plugin":   plugin.SubCommand{},
 }
 
 func Execute() {

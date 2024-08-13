@@ -3,6 +3,7 @@ package cmd
 import (
 	"flag"
 	"github.com/imMohika/gohangyourself/cmd/sub"
+	"github.com/imMohika/gohangyourself/cmd/sub/config"
 	"github.com/imMohika/gohangyourself/cmd/sub/platform"
 	"github.com/imMohika/gohangyourself/cmd/sub/plugin"
 	"github.com/imMohika/gohangyourself/cmd/sub/script"
@@ -30,6 +31,7 @@ var subCommands = map[string]sub.Command{
 	"platform": platform.SubCommand{},
 	"script":   script.SubCommand{},
 	"plugin":   plugin.SubCommand{},
+	"config":   config.SubCommand{},
 }
 
 func Execute() {

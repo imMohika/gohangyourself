@@ -1,9 +1,11 @@
 name: goreleaser
 
 on:
-  push:
-    branches:
-      - master
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'New tag name'
+        required: true
 
 permissions:
   contents: write

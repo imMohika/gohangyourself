@@ -5,6 +5,7 @@ import (
 	"flag"
 	"github.com/imMohika/gohangyourself/cmd/sub"
 	"github.com/imMohika/gohangyourself/cmd/sub/config/sub/cp"
+	"github.com/imMohika/gohangyourself/cmd/sub/config/sub/process"
 	"github.com/imMohika/gohangyourself/log"
 	"os"
 	"strings"
@@ -14,12 +15,14 @@ type SubCommand struct {
 }
 
 var subCommands = map[string]sub.Command{
-	"cp": cp.SubCommand{},
+	"cp":      cp.SubCommand{},
+	"process": process.SubCommand{},
 	//"sync": sync.SubCommand{},
 }
 
 const usage = `Config:
 	cp	copy and process a config file
+	cp	process files
 `
 
 func (s SubCommand) Handle(args []string) {

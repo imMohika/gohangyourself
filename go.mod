@@ -3,6 +3,7 @@ module github.com/imMohika/gohangyourself
 go 1.22
 
 require (
+	github.com/bmatcuk/doublestar/v4 v4.6.1
 	github.com/pterm/pterm v0.12.79
 	github.com/tidwall/gjson v1.17.3
 	github.com/tomwright/dasel v1.27.3
@@ -17,7 +18,6 @@ require (
 	github.com/Masterminds/semver/v3 v3.2.1 // indirect
 	github.com/Masterminds/sprig/v3 v3.2.3 // indirect
 	github.com/alecthomas/chroma v0.10.0 // indirect
-	github.com/bmatcuk/doublestar/v4 v4.6.1 // indirect
 	github.com/clbanning/mxj/v2 v2.7.0 // indirect
 	github.com/containerd/console v1.0.4-0.20230313162750-1ae8d489ac81 // indirect
 	github.com/dlclark/regexp2 v1.11.4 // indirect

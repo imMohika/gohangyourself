@@ -14,10 +14,16 @@ func Request(url string, notOkErr string) *http.Response {
 	log.Debug("Request URL:", url)
 
 	req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, url, nil)
-	log.Error(err, "an error occurred while making request", "url", url)
+	if err != nil {
+		log.Error(err, "an error occurred while making request", "url", url)
+		return nil
+	}
 
 	response, err := http.DefaultClient.Do(req)
-	log.Error(err, "an error occurred while sending request", "url", url)
+	if err != nil {
+		log.Error(err, "an error occurred while sending request", "url", url)
+		return nil
+	}
 
 	if response.StatusCode != http.StatusOK {
 		log.Error(errors.New(notOkErr), "unexpected status code", "status", response.StatusCode, "url", url)
@@ -27,16 +33,23 @@ func Request(url string, notOkErr string) *http.Response {
 	return response
 }
 
-func Get(url string, notOkErr string, content interface{}) int {
+func Get(url string, notOkErr string, content interface{}) (int, error) {
 	resp := Request(url, notOkErr)
 
 	log.Debug("decoding json")
 	err := json.NewDecoder(resp.Body).Decode(&content)
-	log.Error(err, "an error occurred while decoding json")
+	if err != nil {
+		log.Error(err, "an error occurred while decoding json")
+		return -1, err
+	}
 
 	err = resp.Body.Close()
-	log.Error(err, "failed to close response body")
-	return resp.StatusCode
+	if err != nil {
+		log.Error(err, "failed to close response body")
+		return -1, err
+	}
+
+	return resp.StatusCode, nil
 }
 func GetGJSON(url string, notOkErr string) gjson.Result {
 	resp := Request(url, notOkErr)

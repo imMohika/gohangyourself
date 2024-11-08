@@ -7,6 +7,7 @@ import (
 	"github.com/imMohika/gohangyourself/cmd/sub/platform"
 	"github.com/imMohika/gohangyourself/cmd/sub/plugin"
 	"github.com/imMohika/gohangyourself/cmd/sub/script"
+	"github.com/imMohika/gohangyourself/log"
 	"log/slog"
 	"os"
 	"strings"
@@ -36,7 +37,7 @@ var subCommands = map[string]sub.Command{
 
 func Execute() {
 	flag.Usage = func() {
-		slog.Info(usage)
+		log.Info(usage)
 	}
 
 	if len(os.Args) < 2 {

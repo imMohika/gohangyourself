@@ -17,6 +17,17 @@ type PluginHandler struct {
 var hangarRegex = regexp.MustCompile(`^https:\/\/hangar\.papermc\.io\/.+\/(.+)$`)
 
 func FromURL(url string) *PluginHandler {
+	if strings.HasPrefix(url, "hangar:") {
+		_, slug, found := strings.Cut(url, ":")
+		if !found {
+			log.FatalMsg("invalid url passed to plugin.handler.hangar", "url", url)
+		}
+		return &PluginHandler{
+			url:  url,
+			slug: slug,
+		}
+	}
+
 	matches := hangarRegex.FindStringSubmatch(url)
 	if matches == nil {
 		log.FatalMsg("invalid url passed to plugin.handler.hangar", "url", url)

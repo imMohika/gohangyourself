@@ -49,7 +49,7 @@ func (s SubCommand) Handle(args []string) {
 		return
 	}
 
-	version, err := selectVersion(versions, FlagLatestVersion)
+	version, err := selectVersion(versions, FlagLatestVersion, FlagPlatform)
 	if err != nil {
 		log.Fatal(err, "can not select plugin version", "url", url, "handler", pluginHandler.Name())
 		return
@@ -82,9 +82,15 @@ func getVersions(pluginHandler handler.PluginHandler) ([]internal.PluginVersion,
 	return versions, nil
 }
 
-func selectVersion(versions []internal.PluginVersion, latest bool) (internal.PluginVersion, error) {
+func selectVersion(versions []internal.PluginVersion, latest bool, platform string) (internal.PluginVersion, error) {
 	if latest {
-		return versions[0], nil
+		for _, version := range versions {
+			if slices.Contains(version.Loaders, platform) {
+				return version, nil
+			}
+		}
+
+		return internal.PluginVersion{}, errors.New("could not find latest version for specified platform")
 	}
 
 	options := make([]string, len(versions))

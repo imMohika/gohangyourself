@@ -6,6 +6,7 @@ import (
 	"github.com/imMohika/gohangyourself/log"
 	"github.com/imMohika/gohangyourself/net"
 	"regexp"
+	"strings"
 )
 
 type PluginHandler struct {
@@ -16,6 +17,17 @@ type PluginHandler struct {
 var modrinthRegex = regexp.MustCompile(`^https:\/\/modrinth\.com\/plugin\/(.+)$`)
 
 func FromURL(url string) *PluginHandler {
+	if strings.HasPrefix(url, "modrinth:") {
+		_, slug, found := strings.Cut(url, ":")
+		if !found {
+			log.FatalMsg("invalid url passed to plugin.handler.modrinth", "url", url)
+		}
+		return &PluginHandler{
+			url:  url,
+			slug: slug,
+		}
+	}
+
 	matches := modrinthRegex.FindStringSubmatch(url)
 	if matches == nil {
 		log.FatalMsg("invalid url passed to plugin.handler.modrinth", "url", url)
